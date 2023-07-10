@@ -1,9 +1,13 @@
-<template>
-  <q-page padding> Patients Page </q-page>
-</template>
+<script setup>
+import FormBuilder from "components/FormBuilder.vue";
+import { createFields } from "src/models/patient.js";
+import { computed } from "vue";
 
-<script>
-export default {
-  // name: 'PageName',
-};
+const fields = computed(() => createFields());
 </script>
+
+<template>
+  <q-page padding>
+    <FormBuilder :fields="fields" />
+  </q-page>
+</template>
