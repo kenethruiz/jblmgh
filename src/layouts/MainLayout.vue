@@ -1,3 +1,20 @@
+<script setup>
+import routes from "src/router/routes.js";
+import { computed } from "vue";
+
+const tabs = computed(() => {
+  const layout = routes.filter((item) => {
+    return item.path === "/auth";
+  });
+
+  const children = layout.map((item) => {
+    return item.children;
+  });
+
+  return children[0];
+});
+</script>
+
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white" height-hint="98">
@@ -11,10 +28,12 @@
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/auth/patients" label="Patients" />
-        <q-route-tab to="/auth/appointments" label="Appointments" />
-        <q-route-tab to="/auth/chats" label="Chats" />
-        <q-route-tab to="/auth/Consultations" label="Consultations" />
+        <q-route-tab
+          v-for="tab in tabs"
+          :key="tab.path"
+          :to="'/auth/' + tab.path"
+          :label="tab.name"
+        />
       </q-tabs>
     </q-header>
 
