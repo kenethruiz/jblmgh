@@ -16,7 +16,7 @@ const routes = [
     children: [
       {
         path: "patients",
-        component: () => import("pages/PatientsPage.vue"),
+        component: () => import("pages/patients/IndexPage.vue"),
         name: "Patients",
       },
       {
