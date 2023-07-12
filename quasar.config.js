@@ -9,14 +9,15 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require("quasar/wrappers");
+const path = require("path");
 
 module.exports = configure(function (/* ctx */) {
   return {
     eslint: {
       // fix: true,
-      // include: [],
-      // exclude: [],
-      // rawOptions: {},
+      // include = [],
+      // exclude = [],
+      // rawOptions = {},
       warnings: true,
       errors: true,
     },
@@ -27,7 +28,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: ["axios"],
+    boot: ["i18n", "axios", "firebaseConnection"],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ["app.scss"],
@@ -53,6 +54,11 @@ module.exports = configure(function (/* ctx */) {
         node: "node16",
       },
 
+      alias: {
+        utils: path.resolve(__dirname, "./src/utils"),
+        models: path.resolve(__dirname, "./src/models"),
+      },
+
       vueRouterMode: "history", // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
@@ -60,9 +66,17 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: '/jblmgh/',
       // analyze: true,
-      // env: {},
+      env: {
+        APP_NAME: "JBLMGH App",
+        FIREBASE_API_KEY: "AIzaSyDqi5kKdriVp892K_bbxn8mRB_cB4vL2C8",
+        FIREBASE_AUTH_DOMAIN: "jblmgh-29fad.firebaseapp.com",
+        FIREBASE_PROJECT_ID: "jblmgh-29fad",
+        FIREBASE_STORAGE_BUCKET: "jblmgh-29fad.appspot.com",
+        FIREBASE_MESSAGING_SENDER_ID: "503714914360",
+        FIREBASE_APP_ID: "1:503714914360:web:eb3bef6a8a888faefdc6cd"
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -72,22 +86,41 @@ module.exports = configure(function (/* ctx */) {
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
 
-      // vitePlugins: [
-      //   [ 'package-name', { ..options.. } ]
-      // ]
+      vitePlugins: [
+        [
+          "@intlify/vite-plugin-vue-i18n",
+          {
+            // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
+            // compositionOnly: false,
+
+            // you need to set i18n resource including paths !
+            include: path.resolve(__dirname, "./src/i18n/**"),
+          },
+        ],
+      ],
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
       open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        '/api': {
+          target: 'http://some.api.target.com:7070',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api': ''
+          }
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {},
 
-      // iconSet: 'material-icons', // Quasar icon set
+      iconSet: "material-icons", // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
@@ -98,7 +131,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ["Dark", "Dialog", "Loading", "Notify"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -167,7 +200,6 @@ module.exports = configure(function (/* ctx */) {
       // extendElectronMainConf (esbuildConf)
       // extendElectronPreloadConf (esbuildConf)
 
-      // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
 
       bundler: "packager", // 'packager' or 'builder'
@@ -186,7 +218,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "jblmgh",
+        appId: "ghitap-telemed-app",
       },
     },
 
