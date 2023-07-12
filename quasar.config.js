@@ -75,7 +75,8 @@ module.exports = configure(function (/* ctx */) {
         FIREBASE_PROJECT_ID: "jblmgh-29fad",
         FIREBASE_STORAGE_BUCKET: "jblmgh-29fad.appspot.com",
         FIREBASE_MESSAGING_SENDER_ID: "503714914360",
-        FIREBASE_APP_ID: "1:503714914360:web:eb3bef6a8a888faefdc6cd"
+        FIREBASE_APP_ID: "1:503714914360:web:eb3bef6a8a888faefdc6cd",
+        API_URL: "http://localhost:8000"
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
