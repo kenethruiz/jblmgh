@@ -68,16 +68,7 @@ module.exports = configure(function (/* ctx */) {
 
       publicPath: '/jblmgh/',
       // analyze: true,
-      env: {
-        APP_NAME: "JBLMGH App",
-        FIREBASE_API_KEY: "AIzaSyDqi5kKdriVp892K_bbxn8mRB_cB4vL2C8",
-        FIREBASE_AUTH_DOMAIN: "jblmgh-29fad.firebaseapp.com",
-        FIREBASE_PROJECT_ID: "jblmgh-29fad",
-        FIREBASE_STORAGE_BUCKET: "jblmgh-29fad.appspot.com",
-        FIREBASE_MESSAGING_SENDER_ID: "503714914360",
-        FIREBASE_APP_ID: "1:503714914360:web:eb3bef6a8a888faefdc6cd",
-        API_URL: "http://localhost:8000"
-      },
+      env: require('dotenv').config().parsed,
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
